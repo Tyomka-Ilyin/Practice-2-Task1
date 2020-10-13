@@ -32,6 +32,10 @@
   			<input type="submit" name="" value="Список персон">
   		</form>
 
+      <form method="post" action="input_form.php" enctype="multipart/form-data">
+        <input type="submit" name="" value="Вход">
+      </form>
+
   		<form method="post" action="registration_form.php" enctype="multipart/form-data">
   			<input type="submit" name="" value="Регистрация">
   		</form>
@@ -40,13 +44,4 @@
 
  </body>
 </html>
-
-<?php
-
-
-if (array_key_exists('but_search_all',$_POST)) {
-	}
-
-
-?>
 
