@@ -2,7 +2,7 @@
 
 class add_sight{
 
-	public function __construct($nickname,$title,$genre,$length,$image,$id_user,$conn,$images,$creator,$actors){
+	public function __construct($nickname,$title,$genre,$length,$image,$id_user,$conn,$creator,$actors){
 
 			$this->nickname=$nickname;
       $this->id_user=$id_user;
@@ -10,7 +10,6 @@ class add_sight{
       $this->title=$title;
       $this->genre=$genre;
       $this->length=$length;
-      $this->images=$images;
       $this->creator=$creator;
       $this->actors=$actors;
 
@@ -30,11 +29,11 @@ class add_sight{
       $id_fs_sql="SELECT id_fs FROM Films_series WHERE title = '$this->title'";
       $id_fs=$this->conn->query($id_fs_sql)->fetch(PDO::FETCH_COLUMN);
 
-      foreach ($this->images as $value) {
+      foreach($_FILES['Photos']['name'] as $k=>$f){
         $path='photo_fs/';
-        $full_path=$path.[$value]["name"];
+        $full_path=$path.$_FILES['Photos']['name'][$k];
 
-        move_uploaded_file([$value]["tmp_name"], $full_path);
+        move_uploaded_file($_FILES['Photos']['tmp_name'][$k], $full_path);
 
         $add_images_sql="INSERT INTO Photo_fs(id_fs, photo_fs) VALUES ('$id_fs','$full_path')";
 
@@ -46,25 +45,29 @@ class add_sight{
 
     public function in_table_creators_actors_films(){
 
-      $id_fs_sql="SELECT id_fs FROM Films_series WHERE title = '$this->title'";
-      $id_fs=$this->conn->query($id_fs_sql)->fetch(PDO::FETCH_COLUMN);
+      try{
+        $id_fs_sql="SELECT id_fs FROM Films_series WHERE title = '$this->title'";
+        $id_fs=$this->conn->query($id_fs_sql)->fetch(PDO::FETCH_COLUMN);
 
-      $array_actors=explode(", ", $this->actors);
+        $array_actors=explode(", ", $this->actors);
 
-      array_push($array_actors, $this->creator);
+        array_push($array_actors, $this->creator);
 
-      foreach ($array_actors as $value) {
-        $id_creators_or_actors_sql="SELECT id_ca FROM Creators_actors WHERE FIO = '$value'";
-        $id_creators_or_actors=$this->conn->query($id_creators_or_actors_sql)->fetch(PDO::FETCH_COLUMN);
+        foreach ($array_actors as $value) {
+          $id_creators_or_actors_sql="SELECT id_ca FROM Creators_actors WHERE FIO = '$value'";
+          $id_creators_or_actors=$this->conn->query($id_creators_or_actors_sql)->fetch(PDO::FETCH_COLUMN);
 
-        $add_creator_or_actor_sql="INSERT INTO Creators_actors_film(id_fs,id_ca) VALUES('$id_fs','$id_creators_or_actors')";
-        $sth=$this->conn->prepare($add_creator_or_actor_sql);
-        $sth->execute();
+          $add_creator_or_actor_sql="INSERT INTO Creators_actors_film(id_fs,id_ca) VALUES('$id_fs','$id_creators_or_actors')";
+          $sth=$this->conn->prepare($add_creator_or_actor_sql);
+          $sth->execute();
 
+        }
+
+        header("Location: page.php?nickname=$this->nickname&id_user=$this->id_user");
       }
-
-      header("Location: page.php?nickname=$this->nickname&id_user=$this->id_user");
-
+      catch(Exception $e){
+        echo "Имя персоны с ошибкой";
+      }
     }
 
     
@@ -85,12 +88,11 @@ $nickname=$_POST['Nickname'];
 $title=$_POST['Title'];
 $genre=$_POST['Genre'];
 $length=$_POST['Length'];
-$images = $_FILES["Photo"];
 
 $creator=$_POST["Creator"];
 $actors=$_POST["Actors"];
 
-$add_person= new add_sight($nickname,$title,$genre,$length,$image,$id_user,$conn,$images,$creator,$actors);
+$add_person= new add_sight($nickname,$title,$genre,$length,$image,$id_user,$conn,$creator,$actors);
 $add_person->in_table_films_series();
 $add_person->in_table_photo_fs();
 $add_person->in_table_creators_actors_films();

@@ -30,7 +30,7 @@ $nickname=$_POST['Nickname'];
 	<label>Актёры</label>
 	<input type="input" name="Actors" required><br>
 
-	<input type="file" name="Photo" accept="image/*" required multiple><br>
+	<input type="file" name="Photos[]" accept="image/*" required multiple><br>
 
 	<input type="submit" value="Добавить">
 

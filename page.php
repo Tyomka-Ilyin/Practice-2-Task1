@@ -35,7 +35,7 @@ $id_user=$_GET['id_user'];
   			<input type="submit" name="" value="Список зрелищ">
   		</form>
 
-  		<form method="post" action="" enctype="multipart/form-data">
+  		<form method="post" action="list_persons_form.php" enctype="multipart/form-data">
   			<input type="submit" name="" value="Список персон">
   		</form>
 
@@ -74,20 +74,47 @@ class page{
 
     public function output_my_records(){
 
-    	$out_sql="SELECT FIO, position FROM creators_actors WHERE id_user = '$this->id_user'";
+    $out_sql_ca="SELECT * FROM creators_actors WHERE id_user = '$this->id_user'";
 
-    	$sth = $this->conn->prepare($out_sql);
+    $sth = $this->conn->prepare($out_sql_ca);
 		$sth->execute();
-		$array = $sth->fetchAll(PDO::FETCH_ASSOC);
+		$array_ca = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-		foreach($array as $value){ 
-			echo '<table align="center">
-        	<tr align="center" >'.
-        	'<th>'.'Фамилия '.$value['FIO'].'</th>'.
-        	'<th>'.'Должность:'.$value['position'].'</th>'.
-        	'</tr>'.
-        	'</table>';
+    ?>
+
+    <h1 style="margin-left: 45%; width: 40%;background: #FFFFFF;padding: 10px;">Мои записи</h1>
+
+    <label>Персоны</label>
+    <?php
+
+		foreach($array_ca as $key=>$value){ 
+      ?>
+			   <form method="post" action="сa_form.php" enctype="multipart/form-data">
+            <input type="submit" value="<?php echo("ФИО: ".$array_ca[$key]['FIO']." | Должность:".$array_ca[$key]['position']); ?>">
+            <input type="hidden" name="Id_ca" value="<?php echo($array_ca[$key]['id_ca']) ?>">  
+         </form>
+      <?php
 		}
+    
+    $out_sql_fs="SELECT * FROM Films_series WHERE id_user = '$this->id_user'";
+
+    $sth = $this->conn->prepare($out_sql_fs);
+    $sth->execute();
+    $array_fs = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+    ?>
+
+    <label>Зрелища</label>
+    <?php
+
+    foreach($array_fs as $key=>$value){ 
+      ?>
+         <form method="post" action="сa_form.php" enctype="multipart/form-data">
+            <input type="submit" value="<?php echo($array_fs[$key]['title']); ?>">
+            <input type="hidden" name="Id_ca" value="<?php echo($array_ca[$key]['id_ca']) ?>">  
+         </form>
+      <?php
+    }
 
     }
 
