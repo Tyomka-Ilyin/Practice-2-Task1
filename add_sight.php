@@ -2,27 +2,72 @@
 
 class add_sight{
 
-	public function __construct($nickname,$FIO,$position,$full_path,$id_user,$conn){
+	public function __construct($nickname,$title,$genre,$length,$image,$id_user,$conn,$images,$creator,$actors){
 
 			$this->nickname=$nickname;
-			$this->FIO=$FIO;
-			$this->position=$position;
-			$this->full_path=$full_path;
       $this->id_user=$id_user;
       $this->conn=$conn;
+      $this->title=$title;
+      $this->genre=$genre;
+      $this->length=$length;
+      $this->images=$images;
+      $this->creator=$creator;
+      $this->actors=$actors;
 
     }
 
-    public function in_base(){
+    public function in_table_films_series(){
 
-    	$add_sql="INSERT INTO creators_actors(FIO,position,photo_ca,id_user) VALUES ('$this->FIO','$this->position','$this->full_path','$this->id_user')";
+    	$add_sql="INSERT INTO Films_series(title,genre,length,id_user) VALUES ('$this->title','$this->genre','$this->length','$this->id_user')";
 
     	$sth=$this->conn->prepare($add_sql);
     	$sth->execute();
 
-    	header("Location: page.php?nickname=$this->nickname&id_user=$this->id_user");
+      }
+
+    public function in_table_photo_fs(){
+
+      $id_fs_sql="SELECT id_fs FROM Films_series WHERE title = '$this->title'";
+      $id_fs=$this->conn->query($id_fs_sql)->fetch(PDO::FETCH_COLUMN);
+
+      foreach ($this->images as $value) {
+        $path='photo_fs/';
+        $full_path=$path.[$value]["name"];
+
+        move_uploaded_file([$value]["tmp_name"], $full_path);
+
+        $add_images_sql="INSERT INTO Photo_fs(id_fs, photo_fs) VALUES ('$id_fs','$full_path')";
+
+        $sth=$this->conn->prepare($add_images_sql);
+        $sth->execute();
+      }
 
     }
+
+    public function in_table_creators_actors_films(){
+
+      $id_fs_sql="SELECT id_fs FROM Films_series WHERE title = '$this->title'";
+      $id_fs=$this->conn->query($id_fs_sql)->fetch(PDO::FETCH_COLUMN);
+
+      $array_actors=explode(", ", $this->actors);
+
+      array_push($array_actors, $this->creator);
+
+      foreach ($array_actors as $value) {
+        $id_creators_or_actors_sql="SELECT id_ca FROM Creators_actors WHERE FIO = '$value'";
+        $id_creators_or_actors=$this->conn->query($id_creators_or_actors_sql)->fetch(PDO::FETCH_COLUMN);
+
+        $add_creator_or_actor_sql="INSERT INTO Creators_actors_film(id_fs,id_ca) VALUES('$id_fs','$id_creators_or_actors')";
+        $sth=$this->conn->prepare($add_creator_or_actor_sql);
+        $sth->execute();
+
+      }
+
+      header("Location: page.php?nickname=$this->nickname&id_user=$this->id_user");
+
+    }
+
+    
 
 }
 
@@ -37,17 +82,17 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $id_user=$_POST['Id_user'];
 $nickname=$_POST['Nickname'];
 
-$FIO=$_POST['FIO'];
-$position=$_POST['Position'];
+$title=$_POST['Title'];
+$genre=$_POST['Genre'];
+$length=$_POST['Length'];
+$images = $_FILES["Photo"];
 
-$image = $_FILES["Photo"]["name"];
-$tmp_path = $_FILES['Photo']['tmp_name'];
-$path='photo_person/';
-$full_path=$path.$image;
+$creator=$_POST["Creator"];
+$actors=$_POST["Actors"];
 
-move_uploaded_file($tmp_path, $full_path);
-
-$add_person= new add_person($nickname,$FIO,$position,$full_path,$id_user,$conn);
-$add_person->in_base();
+$add_person= new add_sight($nickname,$title,$genre,$length,$image,$id_user,$conn,$images,$creator,$actors);
+$add_person->in_table_films_series();
+$add_person->in_table_photo_fs();
+$add_person->in_table_creators_actors_films();
 
 ?>

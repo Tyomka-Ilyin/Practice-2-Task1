@@ -25,7 +25,7 @@
 
 	<ul class="menu">
   		<form method="post" action="" enctype="multipart/form-data">
-  			<input type="submit" name="" value="Список фильмов и сериалов">
+  			<input type="submit" name="" value="Список зрелищ">
   		</form>
 
   		<form method="post" action="" enctype="multipart/form-data">

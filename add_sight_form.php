@@ -14,7 +14,7 @@ $nickname=$_POST['Nickname'];
  </head>
  <body>
 
-<form>
+<form method="post" action="add_sight.php" enctype="multipart/form-data">
   <label>Название</label>
 	<input type="input" name="Title" required><br>
 
@@ -24,7 +24,13 @@ $nickname=$_POST['Nickname'];
 	<label>Продолжительность</label>
 	<input type="input" name="Length" required><br>
 
-	<input type="file" name="Photo" accept="image/*" required multiple=""><br>
+	<label>Режиссёр</label>
+	<input type="input" name="Creator" required><br>
+
+	<label>Актёры</label>
+	<input type="input" name="Actors" required><br>
+
+	<input type="file" name="Photo" accept="image/*" required multiple><br>
 
 	<input type="submit" value="Добавить">
 
