@@ -12,19 +12,17 @@ class input{
 
     public function click_input(){
 
-      $id_user_sql="SELECT id_user FROM Users WHERE login = ?";
+      $id_user_sql="SELECT id_user,name_user,position FROM Users WHERE login = '$this->login'";
 
       $stmt = $this->conn->prepare($id_user_sql);
-      $stmt->execute(array("$this->login"));
-      $id_user = $stmt->fetch(PDO::FETCH_COLUMN);
+      $stmt->execute();
+      $array = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      $nickname_sql="SELECT name_user FROM Users WHERE login = ?";
+      $nickname=$array['name_user'];
+      $id_user=$array['id_user'];
+      $position=$array['position']; 
 
-      $st = $this->conn->prepare($nickname_sql);
-      $st->execute(array("$this->login"));
-      $nickname = $st->fetch(PDO::FETCH_COLUMN);
-
-      header("Location: page.php?nickname=$nickname&id_user=$id_user");
+      header("Location: page.php?nickname=$nickname&id_user=$id_user&position=$position");
 
     }
 

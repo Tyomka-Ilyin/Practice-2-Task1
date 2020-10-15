@@ -10,17 +10,20 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class list_person{
 
-	public function __construct($conn){
+	public function __construct($conn,$nickname,$id_user,$position){
 
        		$this->conn=$conn;
+          $this->nickname=$nickname;
+          $this->id_user=$id_user;
+          $this->position=$position;
 
     }
 
     public function marking_page(){
 
-    	$list_person_sql="SELECT * FROM Creators_actors";
+    $list_person_sql="SELECT * FROM Creators_actors";
 
-    	$sth = $this->conn->prepare($list_person_sql);
+    $sth = $this->conn->prepare($list_person_sql);
 		$sth->execute();
 		$array_persons = $sth->fetchAll(PDO::FETCH_ASSOC);
 
@@ -43,7 +46,7 @@ class list_person{
 
 }
 
-$list_p=new list_person($conn);
+$list_p=new list_person($conn,$nickname,$id_user,$position);
 $list_p->marking_page();
 
 ?>

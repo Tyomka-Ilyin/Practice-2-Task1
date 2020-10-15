@@ -1,3 +1,9 @@
+<?php
+
+$id_user="guest";
+
+?>
+
 <html>
  <head>
   <meta charset="utf-8">
@@ -18,19 +24,26 @@
  <body>
 
 
-	<form method="post" action="" enctype="multipart/form-data">
-		<input type="input" placeholder="Название фильма или имя персоны" name="inp_search_all">
-		<input type="submit" name="but_search_all" id="but_search_all" value="Найти">		
-	</form>
+	<form method="post" action="search_form_sight.php" enctype="multipart/form-data">
+    <input type="input" placeholder="Название зрелища" name="Title">
+    <input type="submit" value="Найти">
+    <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">   
+  </form>
+
+  <form method="post" action="search_form_person.php" enctype="multipart/form-data">
+    <input type="input" placeholder="Имя персоны" name="FIO">
+    <input type="submit" value="Найти">   
+  </form>
 
 	<ul class="menu">
-  		<form method="post" action="" enctype="multipart/form-data">
+  		<form method="post" action="list_sight_form.php" enctype="multipart/form-data">
   			<input type="submit" name="" value="Список зрелищ">
+        <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">
   		</form>
 
-  		<form method="post" action="" enctype="multipart/form-data">
-  			<input type="submit" name="" value="Список персон">
-  		</form>
+  		<form method="post" action="list_persons_form.php" enctype="multipart/form-data">
+        <input type="submit" name="" value="Список персон">
+      </form>
 
       <form method="post" action="input_form.php" enctype="multipart/form-data">
         <input type="submit" name="" value="Вход">

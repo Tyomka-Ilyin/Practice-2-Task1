@@ -28,7 +28,7 @@ $nickname=$_POST['Nickname'];
 	<input type="input" name="Creator" required><br>
 
 	<label>Актёры</label>
-	<input type="input" name="Actors" required><br>
+	<input type="input" placeholder="Вводить через запятую" name="Actors" required><br>
 
 	<input type="file" name="Photos[]" accept="image/*" required multiple><br>
 

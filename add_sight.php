@@ -46,6 +46,7 @@ class add_sight{
     public function in_table_creators_actors_films(){
 
       try{
+
         $id_fs_sql="SELECT id_fs FROM Films_series WHERE title = '$this->title'";
         $id_fs=$this->conn->query($id_fs_sql)->fetch(PDO::FETCH_COLUMN);
 
@@ -54,6 +55,7 @@ class add_sight{
         array_push($array_actors, $this->creator);
 
         foreach ($array_actors as $value) {
+          
           $id_creators_or_actors_sql="SELECT id_ca FROM Creators_actors WHERE FIO = '$value'";
           $id_creators_or_actors=$this->conn->query($id_creators_or_actors_sql)->fetch(PDO::FETCH_COLUMN);
 
@@ -64,9 +66,12 @@ class add_sight{
         }
 
         header("Location: page.php?nickname=$this->nickname&id_user=$this->id_user");
+
       }
       catch(Exception $e){
+
         echo "Имя персоны с ошибкой";
+
       }
     }
 

@@ -2,6 +2,7 @@
 
 $nickname=$_GET['nickname'];
 $id_user=$_GET['id_user'];
+$position=$_GET['position'];
 
 ?>
 
@@ -23,19 +24,26 @@ $id_user=$_GET['id_user'];
   </style>
  </head>
  <body>
- 	<h1 style="margin-left: 45%; width: 40%;background: #FFFFFF;padding: 10px;"><?php echo "$nickname"; ?></h1>
+ 	<h1 ><?php echo "$nickname"; ?></h1>
 
- 	<form method="post" action="" enctype="multipart/form-data">
-		<input type="input" placeholder="Название фильма или имя персоны" name="inp_search_all">
-		<input type="submit" name="but_search_all" id="but_search_all" value="Найти">		
+ 	<form method="post" action="search_form_sight.php" enctype="multipart/form-data">
+		<input type="input" placeholder="Название зрелища" name="Title">
+		<input type="submit" value="Найти">
+    <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">		
 	</form>
 
+  <form method="post" action="search_form_person.php" enctype="multipart/form-data">
+    <input type="input" placeholder="Имя персоны" name="FIO">
+    <input type="submit" value="Найти">   
+  </form>
+
 	<ul class="menu">
-  		<form method="post" action="" enctype="multipart/form-data">
+  		<form method="post" action="list_sight_form.php" enctype="multipart/form-data">
   			<input type="submit" name="" value="Список зрелищ">
+  			<input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">
   		</form>
 
-  		<form method="post" action="list_persons_form.php" enctype="multipart/form-data">
+  		<form method="get" action="list_persons_form.php" enctype="multipart/form-data">
   			<input type="submit" name="" value="Список персон">
   		</form>
 
@@ -51,7 +59,20 @@ $id_user=$_GET['id_user'];
             <input type="hidden" name="Nickname" value="<?php echo "$nickname" ?>">
         </form>
 
-        <form method="post" action="input_form.php" enctype="multipart/form-data">
+        <?php
+        if($position=="Админ"){
+          ?>
+          <form method="get" action="list_users_form.php" enctype="multipart/form-data">
+            <input type="submit" name="" value="Список пользователей">
+            <input type="hidden" name="Nickname" value="<?php echo "$nickname" ?>">
+            <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">
+            <input type="hidden" name="Position" value="<?php echo "$position" ?>">
+          </form>
+        <?php
+        }
+        ?>
+
+        <form method="post" action="main_form.php" enctype="multipart/form-data">
         	<input type="submit" name="" value="Выход">
         </form>
 
@@ -67,8 +88,8 @@ class page{
 	public function __construct($nickname,$id_user,$conn){
 
 			$this->nickname=$nickname;
-       		$this->id_user=$id_user;
-       		$this->conn=$conn;
+      $this->id_user=$id_user;
+      $this->conn=$conn;
 
     }
 
@@ -82,9 +103,9 @@ class page{
 
     ?>
 
-    <h1 style="margin-left: 45%; width: 40%;background: #FFFFFF;padding: 10px;">Мои записи</h1>
+    <h1 >Мои записи</h1>
 
-    <label>Персоны</label>
+    <label>Персоны:</label>
     <?php
 
 		foreach($array_ca as $key=>$value){ 
@@ -104,14 +125,16 @@ class page{
 
     ?>
 
-    <label>Зрелища</label>
+    <label>Зрелища:</label>
     <?php
 
     foreach($array_fs as $key=>$value){ 
       ?>
-         <form method="post" action="сa_form.php" enctype="multipart/form-data">
+         <form method="GET" action="fs_form.php" enctype="multipart/form-data">
             <input type="submit" value="<?php echo($array_fs[$key]['title']); ?>">
-            <input type="hidden" name="Id_ca" value="<?php echo($array_ca[$key]['id_ca']) ?>">  
+            <input type="hidden" name="Id_fs" value="<?php echo($array_fs[$key]['id_fs']) ?>">
+            <input type="hidden" name="Id_user" value="<?php echo($this->id_user) ?>">
+            <input type="hidden" name="Nickname" value="<?php echo($this->nickname) ?>">  
          </form>
       <?php
     }

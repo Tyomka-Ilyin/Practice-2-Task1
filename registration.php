@@ -13,8 +13,8 @@ class registration{
 
     public function click_reg(){
 
-    	$add_sql="INSERT INTO Users(name_user,login,password)
-    			  VALUES('$this->nickname','$this->login','$this->password')";
+    	$add_sql="INSERT INTO Users(name_user,login,password,position)
+    			  VALUES('$this->nickname','$this->login','$this->password','Пользователь')";
 
     	$sth=$this->conn->prepare($add_sql);
     	$sth->execute();

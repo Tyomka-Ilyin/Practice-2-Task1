@@ -20,8 +20,8 @@ $nickname=$_POST['Nickname'];
 
 	<label>Должность</label>
 	<select name = "Position">
-			<option value = "Актёр">Актёр</option>
-			<option value = "Режиссёр">Режисёр</option>
+		<option value = "Актёр">Актёр</option>
+		<option value = "Режиссёр">Режисёр</option>
 	</select><br>
 
 	<input type="file" name="Photo" accept="image/*" required><br>

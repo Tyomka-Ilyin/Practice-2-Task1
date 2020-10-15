@@ -8,8 +8,8 @@ class add_person{
 			$this->FIO=$FIO;
 			$this->position=$position;
 			$this->full_path=$full_path;
-       		$this->id_user=$id_user;
-       		$this->conn=$conn;
+      $this->id_user=$id_user;
+      $this->conn=$conn;
 
     }
 
