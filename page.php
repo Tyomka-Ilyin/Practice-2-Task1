@@ -4,6 +4,8 @@ $nickname=$_GET['nickname'];
 $id_user=$_GET['id_user'];
 $position=$_GET['position'];
 
+$url=$_SERVER['REQUEST_URI'];
+
 ?>
 
 <html>
@@ -29,7 +31,7 @@ $position=$_GET['position'];
  	<form method="post" action="search_form_sight.php" enctype="multipart/form-data">
 		<input type="input" placeholder="Название зрелища" name="Title">
 		<input type="submit" value="Найти">
-    <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">		
+    <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">
 	</form>
 
   <form method="post" action="search_form_person.php" enctype="multipart/form-data">
@@ -40,7 +42,7 @@ $position=$_GET['position'];
 	<ul class="menu">
   		<form method="post" action="list_sight_form.php" enctype="multipart/form-data">
   			<input type="submit" name="" value="Список зрелищ">
-  			<input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">
+  			<input type="hidden" name="Id_user" value="<?php echo "$id_user"; ?>">
   		</form>
 
   		<form method="get" action="list_persons_form.php" enctype="multipart/form-data">
@@ -62,17 +64,15 @@ $position=$_GET['position'];
         <?php
         if($position=="Админ"){
           ?>
-          <form method="get" action="list_users_form.php" enctype="multipart/form-data">
+          <form method="post" action="list_users_form.php" enctype="multipart/form-data">
             <input type="submit" name="" value="Список пользователей">
-            <input type="hidden" name="Nickname" value="<?php echo "$nickname" ?>">
-            <input type="hidden" name="Id_user" value="<?php echo "$id_user" ?>">
-            <input type="hidden" name="Position" value="<?php echo "$position" ?>">
+            <input type="hidden" name="URL" value="<?php echo "$url" ?>">
           </form>
         <?php
         }
         ?>
 
-        <form method="post" action="main_form.php" enctype="multipart/form-data">
+        <form method="post" action="index.php" enctype="multipart/form-data">
         	<input type="submit" name="" value="Выход">
         </form>
 

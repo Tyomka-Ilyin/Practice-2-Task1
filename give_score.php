@@ -1,8 +1,9 @@
 <?php
 
-$id_user=$_GET['Id_user'];
-$score=$_GET['Score'];
-$id_fs=$_GET['Id_fs'];
+$id_user=$_POST['Id_user'];
+$score=$_POST['Score'];
+$id_fs=$_POST['Id_fs'];
+$url=$_POST['URL'];
 
 $servername = "localhost:3305";
 $username = "root"; 
@@ -14,12 +15,13 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class give_score{
 
-	public function __construct($conn,$id_user,$score,$id_fs){
+	public function __construct($conn,$id_user,$score,$id_fs,$url){
 
        		$this->conn=$conn;
           $this->id_user=$id_user;
           $this->score=$score;
           $this->id_fs=$id_fs;
+          $this->url=$url;
 
     }
 
@@ -54,13 +56,13 @@ class give_score{
       $sth=$this->conn->prepare($add_av_score_sql);
       $sth->execute();
 
-      header("Location: fs_form.php?Id_fs=$this->id_fs&Id_user=$this->id_user");
+      header("Location: $this->url");
 
     }
 
 }
 
-$list_p=new give_score($conn,$id_user,$score,$id_fs);
+$list_p=new give_score($conn,$id_user,$score,$id_fs,$url);
 $list_p->in_base();
 
 ?>

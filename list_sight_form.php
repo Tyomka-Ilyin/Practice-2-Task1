@@ -1,7 +1,6 @@
 <?php
 
 $id_user=$_POST['Id_user'];
-$nickname=$_POST['Nickname'];
 
 $servername = "localhost:3305";
 $username = "root"; 
@@ -13,10 +12,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class list_sight{
 
-	public function __construct($conn,$id_user,$nickname){
+	public function __construct($conn,$id_user,$url){
 
        		$this->conn=$conn;
           $this->id_user=$id_user;
+          $this->url=$url;
 
     }
 
@@ -40,6 +40,7 @@ class list_sight{
             <input type="submit" value="<?php echo($array_sight[$key]['title']); ?>">
             <input type="hidden" name="Id_fs" value="<?php echo($array_sight[$key]['id_fs']) ?>">
             <input type="hidden" name="Id_user" value="<?php echo($this->id_user) ?>"> 
+            <input type="hidden" name="URL" value="<?php echo($this->url); ?>">
          </form>
       	<?php
 		}
@@ -48,7 +49,7 @@ class list_sight{
 
 }
 
-$list_p=new list_sight($conn,$id_user,$nickname);
+$list_p=new list_sight($conn,$id_user,$url);
 $list_p->marking_page();
 
 ?>

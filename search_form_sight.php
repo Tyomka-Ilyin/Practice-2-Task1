@@ -13,11 +13,12 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class fs{
 
-  public function __construct($title,$conn,$id_user){
+  public function __construct($title,$conn,$id_user,$url){
 
           $this->title=$title;
           $this->conn=$conn;
           $this->id_user=$id_user;
+          $this->url=$url;
 
     }
 
@@ -41,6 +42,7 @@ class fs{
             <input type="submit" value="<?php echo($array_sight[$key]['title']); ?>">
             <input type="hidden" name="Id_fs" value="<?php echo($array_sight[$key]['id_fs']) ?>">
             <input type="hidden" name="Id_user" value="<?php echo($this->id_user) ?>"> 
+            <input type="hidden" name="URL" value="<?php echo ($this->url); ?>">
          </form>
         <?php
       }
@@ -51,7 +53,7 @@ class fs{
 
 }
 
-$ca=new fs($title,$conn,$id_user);
+$ca=new fs($title,$conn,$id_user,$url);
 $ca->marking_page();
 
 ?>

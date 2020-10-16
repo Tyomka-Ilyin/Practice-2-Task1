@@ -1,8 +1,6 @@
 <?php
 
-$nickname=$_POST['Nickname'];
-$id_user=$_POST['Id_user'];
-$position=$_POST['Position'];
+$url=$_POST['URL'];
 
 $nickname_user=$_POST['Nickname_user'];
 
@@ -16,13 +14,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class user{
 
-  public function __construct($nickname_user,$conn,$nickname,$id_user,$position){
+  public function __construct($nickname_user,$conn,$url){
 
           $this->nickname_user=$nickname_user;
+          $this->url=$url;
           $this->conn=$conn;
-          $this->nickname=$nickname;
-          $this->id_user_my=$id_user;
-          $this->position=$position;
 
     }
 
@@ -45,6 +41,8 @@ class user{
     <?php
 
     $id_user=$array_user['id_user'];
+
+    echo "$id_user";
 
     $out_sql_ca="SELECT * FROM creators_actors WHERE id_user = '$id_user'";
 
@@ -88,17 +86,13 @@ class user{
     <form method="post" action="admin_in_base.php" enctype="multipart/form-data">
       <input type="submit" value="Сделать админом">
       <input type="hidden" name="Id_user" value="<?php echo($id_user) ?>">
-      <input type="hidden" name="Id_user_my" value="<?php echo($this->id_user_my) ?>">
-      <input type="hidden" name="Nickname" value="<?php echo($this->nickname) ?>">
-      <input type="hidden" name="Position" value="<?php echo($this->position) ?>">  
+      <input type="hidden" name="URL" value="<?php echo($this->url) ?>">
     </form>
 
     <form method="post" action="delete_user.php" enctype="multipart/form-data">
       <input type="submit" value="Удалить">
       <input type="hidden" name="Id_user" value="<?php echo($id_user) ?>">
-      <input type="hidden" name="Id_user_my" value="<?php echo($this->id_user_my) ?>">
-      <input type="hidden" name="Nickname" value="<?php echo($this->nickname) ?>">
-      <input type="hidden" name="Position" value="<?php echo($this->position) ?>"> 
+      <input type="hidden" name="URL" value="<?php echo($this->url) ?>">
     </form>
 
     <?php
@@ -108,7 +102,7 @@ class user{
 
 }
 
-$ca=new user($nickname_user,$conn,$nickname,$id_user,$position);
+$ca=new user($nickname_user,$conn,$url);
 $ca->marking_page();
 
 ?>

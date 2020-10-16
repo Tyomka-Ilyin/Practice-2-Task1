@@ -2,7 +2,8 @@
 
 $id_fs=$_GET['Id_fs'];
 $id_user=$_GET['Id_user'];
-$nickname=$_GET['Nickname'];
+
+$url=$_SERVER['REQUEST_URI'];
 
 $servername = "localhost:3305";
 $username = "root"; 
@@ -14,12 +15,12 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class fs{
 
-  public function __construct($id_fs,$conn,$id_user,$nickname){
+  public function __construct($id_fs,$conn,$id_user,$url){
 
           $this->id_fs=$id_fs;
           $this->conn=$conn;
           $this->id_user=$id_user;
-          $this->nickname=$nickname;
+          $this->url=$url;
 
     }
 
@@ -97,6 +98,7 @@ class fs{
         <p><input type="submit" value="Поставить оценку"></p>
         <input type="hidden" name="Id_user" value="<?php echo($this->id_user) ?>">
         <input type="hidden" name="Id_fs" value="<?php echo($this->id_fs) ?>">
+        <input type="hidden" name="URL" value="<?php echo($this->url) ?>">
       </form>
     
     <?php
@@ -108,7 +110,7 @@ class fs{
 
 }
 
-$ca=new fs($id_fs,$conn,$id_user,$nickname);
+$ca=new fs($id_fs,$conn,$id_user,$url);
 $ca->marking_page();
 
 ?>

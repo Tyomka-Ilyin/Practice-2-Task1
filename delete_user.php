@@ -1,8 +1,6 @@
 <?php
 
-$nickname=$_POST['Nickname'];
-$id_user_my=$_POST['Id_user_my'];
-$position=$_POST['Position'];
+$url=$_POST['URL'];
 
 $id_user=$_POST['Id_user'];
 
@@ -16,13 +14,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class del_from_base{
 
-  public function __construct($id_user,$conn,$nickname,$id_user_my,$position){
+  public function __construct($id_user,$conn,$url){
 
           $this->id_user=$id_user;
           $this->conn=$conn;
-          $this->nickname=$nickname;
-          $this->id_user_my=$id_user_my;
-          $this->position=$position;
+          $this->url=$url;
 
     }
 
@@ -31,15 +27,15 @@ class del_from_base{
     	$del_tab_user_sql="DELETE FROM Users WHERE id_user='$this->id_user'";
 
     	$sth=$this->conn->prepare($del_tab_user_sql);
-      	$sth->execute();
+      $sth->execute();
 
-      	header("Location: page.php?nickname=$this->nickname&id_user=$this->id_user_my&position=$this->position");
+      header("Location: $this->url");
 
     }
 
 }
 
-$del=new del_from_base($id_user,$conn,$nickname,$id_user_my,$position);
+$del=new del_from_base($id_user,$conn,$url);
 $del->del_user();
 
 ?>

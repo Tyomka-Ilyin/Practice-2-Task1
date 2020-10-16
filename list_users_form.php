@@ -1,8 +1,6 @@
 <?php
 
-$nickname=$_GET['Nickname'];
-$id_user=$_GET['Id_user'];
-$position=$_GET['Position'];
+$url=$_POST['URL'];
 
 $servername = "localhost:3305";
 $username = "root"; 
@@ -14,12 +12,10 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 class list_users{
 
-	public function __construct($conn,$nickname,$id_user,$position){
+	public function __construct($conn,$url){
 
        		$this->conn=$conn;
-          $this->nickname=$nickname;
-          $this->id_user=$id_user;
-          $this->position=$position;
+          $this->url=$url;
 
     }
 
@@ -41,9 +37,7 @@ class list_users{
       	?>
 			   <form method="post" action="user_form.php" enctype="multipart/form-data">
             <input name="Nickname_user" type="submit" value="<?php echo($array_users[$key]['name_user']); ?>">
-            <input type="hidden" name="Nickname" value="<?php echo "$this->nickname" ?>">
-            <input type="hidden" name="Id_user" value="<?php echo "$this->id_user" ?>">
-            <input type="hidden" name="Position" value="<?php echo "$this->position" ?>">
+            <input type="hidden" name="URL" value="<?php echo "$this->url" ?>">
          </form>
       	<?php
 		}
@@ -52,7 +46,7 @@ class list_users{
 
 }
 
-$list_p=new list_users($conn,$nickname,$id_user,$position);
+$list_p=new list_users($conn,$url);
 $list_p->marking_page();
 
 ?>

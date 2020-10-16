@@ -17,7 +17,7 @@ class add_sight{
 
     public function in_table_films_series(){
 
-    	$add_sql="INSERT INTO Films_series(title,genre,length,id_user) VALUES ('$this->title','$this->genre','$this->length','$this->id_user')";
+    	$add_sql="INSERT INTO Films_series(title,genre,length,id_user,kol_scores,score) VALUES ('$this->title','$this->genre','$this->length','$this->id_user',0,0)";
 
     	$sth=$this->conn->prepare($add_sql);
     	$sth->execute();
