@@ -60,9 +60,6 @@ class ca{
 
 }
 
-$ca=new ca($id_ca,$conn);
-$ca->marking_page();
-
 ?>
 
 <html>
@@ -73,6 +70,13 @@ $ca->marking_page();
   </style>
  </head>
  <body>
+
+<?php
+
+$ca=new ca($id_ca,$conn);
+$ca->marking_page();
+
+?>
 
  </body>
 </html>

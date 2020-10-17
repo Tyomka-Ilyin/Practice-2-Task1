@@ -28,7 +28,7 @@ class input{
 
     public function check_user(){
 
-      $check_user_sql="SELECT COUNT(id_user) from Users Where login = ?";
+      $check_user_sql="SELECT COUNT(id_user) from Users Where login = ? and password='$this->password'";
 
       $stmt = $this->conn->prepare($check_user_sql);
       $stmt->execute(array("$this->login"));

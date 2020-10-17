@@ -53,19 +53,23 @@ class fs{
 
 }
 
-$ca=new fs($title,$conn,$id_user,$url);
-$ca->marking_page();
-
 ?>
 
 <html>
  <head>
   <meta charset="utf-8">
-  <title>Персона</title>
+  <title>Зрелища</title>
   <style type="text/css">
   </style>
  </head>
  <body>
+
+<?php
+
+$ca=new fs($title,$conn,$id_user,$url);
+$ca->marking_page();
+
+?>
 
  </body>
 </html>

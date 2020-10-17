@@ -46,9 +46,6 @@ class list_person{
 
 }
 
-$list_p=new list_person($conn,$nickname,$id_user,$position);
-$list_p->marking_page();
-
 ?>
 
 <html>
@@ -59,6 +56,13 @@ $list_p->marking_page();
   </style>
  </head>
  <body>
+
+<?php
+
+$list_p=new list_person($conn,$nickname,$id_user,$position);
+$list_p->marking_page();
+
+?>
 
  </body>
 </html>

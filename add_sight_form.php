@@ -8,7 +8,7 @@ $nickname=$_POST['Nickname'];
 <html>
  <head>
   <meta charset="utf-8">
-  <title>Добавить персону</title>
+  <title>Добавить зрелище</title>
   <style type="text/css">
   </style>
  </head>

@@ -6,6 +6,14 @@ $position=$_GET['position'];
 
 $url=$_SERVER['REQUEST_URI'];
 
+$servername = "localhost:3305";
+$username = "root"; 
+$password_db = "artyom56";
+$dbname = "Base_movies"; 
+
+$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password_db);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 ?>
 
 <html>
@@ -76,6 +84,13 @@ $url=$_SERVER['REQUEST_URI'];
         	<input type="submit" name="" value="Выход">
         </form>
 
+        <?php
+
+        $page=new page($nickname,$id_user,$conn);
+        $page->output_my_records();
+
+        ?>
+
 	</ul>
 
  </body>
@@ -105,7 +120,7 @@ class page{
 
     <h1 >Мои записи</h1>
 
-    <label>Персоны:</label>
+    <label>Персоны:</label><br>
     <?php
 
 		foreach($array_ca as $key=>$value){ 
@@ -113,7 +128,7 @@ class page{
 			   <form method="post" action="сa_form.php" enctype="multipart/form-data">
             <input type="submit" value="<?php echo("ФИО: ".$array_ca[$key]['FIO']." | Должность:".$array_ca[$key]['position']); ?>">
             <input type="hidden" name="Id_ca" value="<?php echo($array_ca[$key]['id_ca']) ?>">  
-         </form>
+         </form><br>
       <?php
 		}
     
@@ -125,7 +140,8 @@ class page{
 
     ?>
 
-    <label>Зрелища:</label>
+    <br>
+    <label>Зрелища:</label><br>
     <?php
 
     foreach($array_fs as $key=>$value){ 
@@ -135,23 +151,12 @@ class page{
             <input type="hidden" name="Id_fs" value="<?php echo($array_fs[$key]['id_fs']) ?>">
             <input type="hidden" name="Id_user" value="<?php echo($this->id_user) ?>">
             <input type="hidden" name="Nickname" value="<?php echo($this->nickname) ?>">  
-         </form>
+         </form><br>
       <?php
     }
 
     }
 
 }
-
-$servername = "localhost:3305";
-$username = "root"; 
-$password_db = "artyom56";
-$dbname = "Base_movies"; 
-
-$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password_db);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-$page=new page($nickname,$id_user,$conn);
-$page->output_my_records();
 
 ?>

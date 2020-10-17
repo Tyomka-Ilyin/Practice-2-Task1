@@ -37,12 +37,10 @@ class user{
     <br>
     <label>Его записи:</label><br>
     <br>
-    <label>Персоны:</label>
+    <label>Персоны:</label><br>
     <?php
 
     $id_user=$array_user['id_user'];
-
-    echo "$id_user";
 
     $out_sql_ca="SELECT * FROM creators_actors WHERE id_user = '$id_user'";
 
@@ -55,7 +53,7 @@ class user{
          <form method="post" action="сa_form.php" enctype="multipart/form-data">
             <input type="submit" value="<?php echo("ФИО: ".$array_ca[$key]['FIO']." | Должность:".$array_ca[$key]['position']); ?>">
             <input type="hidden" name="Id_ca" value="<?php echo($array_ca[$key]['id_ca']) ?>">  
-         </form>
+         </form><br>
       <?php
     }
     
@@ -67,7 +65,7 @@ class user{
 
     ?>
 
-    <label>Зрелища:</label>
+    <label>Зрелища:</label><br>
     <?php
 
     foreach($array_fs as $key=>$value){ 
@@ -77,7 +75,7 @@ class user{
             <input type="hidden" name="Id_fs" value="<?php echo($array_fs[$key]['id_fs']) ?>">
             <input type="hidden" name="Id_user" value="<?php echo($this->id_user) ?>">
             <input type="hidden" name="Nickname" value="<?php echo($this->nickname) ?>">  
-         </form>
+         </form><br>
       <?php
     }
 
@@ -102,19 +100,23 @@ class user{
 
 }
 
-$ca=new user($nickname_user,$conn,$url);
-$ca->marking_page();
-
 ?>
 
 <html>
  <head>
   <meta charset="utf-8">
-  <title>Персона</title>
+  <title>Пользователь</title>
   <style type="text/css">
   </style>
  </head>
  <body>
+
+<?php
+
+$ca=new user($nickname_user,$conn,$url);
+$ca->marking_page();
+
+?>
 
  </body>
 </html>

@@ -49,19 +49,23 @@ class list_sight{
 
 }
 
-$list_p=new list_sight($conn,$id_user,$url);
-$list_p->marking_page();
-
 ?>
 
 <html>
  <head>
   <meta charset="utf-8">
-  <title>Список персон</title>
+  <title>Список зрелищ</title>
   <style type="text/css">
   </style>
  </head>
  <body>
+
+<?php
+
+$list_p=new list_sight($conn,$id_user,$url);
+$list_p->marking_page();
+
+?>
 
  </body>
 </html>

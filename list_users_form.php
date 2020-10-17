@@ -46,19 +46,23 @@ class list_users{
 
 }
 
-$list_p=new list_users($conn,$url);
-$list_p->marking_page();
-
 ?>
 
 <html>
  <head>
   <meta charset="utf-8">
-  <title>Список персон</title>
+  <title>Список пользователей</title>
   <style type="text/css">
   </style>
  </head>
  <body>
+
+<?php
+
+$list_p=new list_users($conn,$url);
+$list_p->marking_page();
+
+?>
 
  </body>
 </html>
